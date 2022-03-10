@@ -1,9 +1,9 @@
-library(tidyverse)
-library(ggplot2)
 library(dash)
 library(dashCoreComponents)
 library(dashHtmlComponents)
 library(dashBootstrapComponents)
+library(tidyverse)
+library(ggplot2)
 library(plotly)
 
 data <- read.csv("https://github.com/ubco-mds-2021-labs/dashboard1-group-g/raw/main/data/clean_spotify.csv", sep = "\t") # nolint
@@ -32,6 +32,27 @@ top_n_by_popularity <- function(data, ycol="Name") {
   chart + coord_flip()
 }
 
+sub_genre_plot <- function(data) {
+  newdata <- df %>%
+  group_by(Playlist.Subgenre) %>%
+  count(Playlist.Subgenre) %>%
+  setNames(c("Playlist.Subgenre", "Count")) %>%
+  ggplot() +
+  aes(
+      x = Count,
+      y = Playlist.Subgenre,
+      color = Playlist.Subgenre,
+      size = Count) +
+  geom_point(alpha = 0.7) +
+  labs(x = "Record Count", y = "Subgenre", legend = "Count") +
+  theme_classic() +
+  theme(axis.title = element_text(family = "Helvetica", face = "bold", size = (20), colour = "black"), # nolint
+        axis.text = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
+        legend.text = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
+        legend.title = element_text(family = "Helvetica", face = "bold", size = (12), colour = "black") # nolint
+)
+  newdata
+}
 
 app <- Dash$new(external_stylesheets = dbcThemes$BOOTSTRAP)
 
@@ -80,7 +101,12 @@ app %>% set_layout(
       div(
         dccGraph(id = "countvsyear"),
         style = list(width = "50%", padding = "10px 5px")
-      ))
+      ),
+      div(
+        dccGraph(id = "subgenre"),
+        style = list(width = "50%", padding = "10px 5px")
+      )
+      )
     )
   )
 
@@ -112,5 +138,15 @@ app |> add_callback(
   }
 )
 
+app |> add_callback(
+  output("subgenre", "figure"),
+  list(input("genre-widget", "value")),
+  function(genres) {
+    new_data <- data |> filter(Playlist.Genre %in% genres)
+    p <- sub_genre_plot(new_data)
+    ggplotly(p)
+
+  }
+)
 
 app %>% run_app()
