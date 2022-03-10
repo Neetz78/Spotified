@@ -1,10 +1,11 @@
 library(dash)
 library(dashCoreComponents)
 library(dashHtmlComponents)
-library(dashBootstrapComponents)
 library(tidyverse)
 library(ggplot2)
 library(plotly)
+library(repr)
+options(repr.plot.width = 10, repr.plot.height = 8)
 
 data <- read.csv("https://github.com/ubco-mds-2021-labs/dashboard1-group-g/raw/main/data/clean_spotify.csv", sep = "\t") # nolint
 year_list <- as.list(as.character(seq(1957, 2020, by = 3)))
@@ -33,7 +34,7 @@ top_n_by_popularity <- function(data, ycol="Name") {
 }
 
 sub_genre_plot <- function(data) {
-  newdata <- df %>%
+  newdata <- data %>%
   group_by(Playlist.Subgenre) %>%
   count(Playlist.Subgenre) %>%
   setNames(c("Playlist.Subgenre", "Count")) %>%
@@ -46,10 +47,10 @@ sub_genre_plot <- function(data) {
   geom_point(alpha = 0.7) +
   labs(x = "Record Count", y = "Subgenre", legend = "Count") +
   theme_classic() +
-  theme(axis.title = element_text(family = "Helvetica", face = "bold", size = (20), colour = "black"), # nolint
+  theme(axis.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
         axis.text = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
         legend.text = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
-        legend.title = element_text(family = "Helvetica", face = "bold", size = (12), colour = "black") # nolint
+        legend.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black") # nolint
 )
   newdata
 }
@@ -96,15 +97,15 @@ app %>% set_layout(
           labelStyle = list(display = "inline-block")
         ),
         dccGraph(id = "top10plot"),
-        style = list(width = "50%", padding = "10px 5px")
+        style = list(width = "100%", padding = "10px 5px")
       ),
       div(
         dccGraph(id = "countvsyear"),
-        style = list(width = "50%", padding = "10px 5px")
+        style = list(width = "100%", padding = "10px 5px")
       ),
       div(
         dccGraph(id = "subgenre"),
-        style = list(width = "50%", padding = "10px 5px")
+        style = list(width = "100%", padding = "10px 5px")
       )
       )
     )
