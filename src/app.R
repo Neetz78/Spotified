@@ -18,6 +18,13 @@ count_vs_year <- function(data) {
     labs(x = "Album Release Year", y = "Number of Songs Released", color = "Genre") # nolint
 }
 
+pop_vs_year <- function(data) {
+  plot <- ggplot(data, aes(x = Year, y = Popularity, color = Playlist.Genre)) +
+    geom_line(stat = 'summary', fun = mean) +
+    theme_classic() +
+    labs(x = "Album Release Year", y = "Mean of Popularity", color = "Genre") # nolint
+}
+
 top_n_by_popularity <- function(data, ycol="Name") {
   data_filtered <- data %>%
   select(ycol, "Popularity") %>%
@@ -100,6 +107,10 @@ app %>% set_layout(
         style = list(width = "100%", padding = "10px 5px")
       ),
       div(
+        dccGraph(id = "popvsyear"),
+        style = list(width = "100%", padding = "10px 5px")
+      ),
+      div(
         dccGraph(id = "countvsyear"),
         style = list(width = "100%", padding = "10px 5px")
       ),
@@ -121,6 +132,19 @@ app |> add_callback(
                               Year >= as.integer(years[[1]]),
                               Year <= as.integer(years[[2]]))
     p <- count_vs_year(new_data)
+    ggplotly(p)
+  }
+)
+
+app |> add_callback(
+  output("popvsyear", "figure"),
+  list(input("genre-widget", "value"),
+       input("year-widget", "value")),
+  function(genres, years) {
+    new_data <- data |> filter(Playlist.Genre %in% genres,
+                               Year >= as.integer(years[[1]]),
+                               Year <= as.integer(years[[2]]))
+    p <- pop_vs_year(new_data)
     ggplotly(p)
   }
 )
