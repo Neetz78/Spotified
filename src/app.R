@@ -72,7 +72,7 @@ tophead <- div(
             ),
             dbcCol(
                 img(
-                    src = "data/assets/logo1.png",
+                    src = "assets/logo1.png",
                     style = list("color" = "green", "background-color" = "black", "textAlign" = "center", "height" = 50)# nolint
                 )
             )
