@@ -18,6 +18,13 @@ count_vs_year <- function(data) {
     labs(x = "Album Release Year", y = "Number of Songs Released", color = "Genre") # nolint
 }
 
+pop_vs_year <- function(data) {
+  plot <- ggplot(data, aes(x = Year, y = Popularity, color = Playlist.Genre)) +
+    geom_line(stat = "summary", fun = mean) +
+    theme_classic() +
+    labs(x = "Album Release Year", y = "Mean of Popularity", color = "Genre") # nolint
+}
+
 top_n_by_popularity <- function(data, ycol="Name") {
   data_filtered <- data %>%
   select(ycol, "Popularity") %>%
@@ -52,13 +59,28 @@ sub_genre_plot <- function(data) {
         legend.text = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
         legend.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black") # nolint
 )
-  newdata
 }
 
-app <- Dash$new(external_stylesheets = dbcThemes$BOOTSTRAP)
+tophead <- div(
+    dbcRow(
+        list(
+            dbcCol(
+                div("Spotified"),
+                width = 8,
+                style = list("color" = "green", "background-color" = "black", "textAlign" = "center", "height" = 50), # nolint
+                md = 10 # nolint
+            ),
+            dbcCol(
+                img(
+                    src = "data/assets/logo1.png",
+                    style = list("color" = "green", "background-color" = "black", "textAlign" = "center", "height" = 50)# nolint
+                )
+            )
+        )
+    )
+)
 
-app %>% set_layout(
-  div(
+dropdown <- div(
     style = list(
       borderBottom = "thin lightgrey solid",
       backgroundColor = "rgb(250, 250, 250)",
@@ -86,30 +108,63 @@ app %>% set_layout(
             marks = year_list,
             value = list(1957, 2020)
           )
-        ))),
-    div(
-      div(
-        dccRadioItems(
-          id = "top_n_type",
-          options = list(list(label = "Name", value = "Name"),
+        )))
+)
+
+row1 <- div(
+          dbcRow(
+              list(
+                dbcCol(
+                    div(
+                      dccRadioItems(
+                        id = "top_n_type",
+                        options = list(list(label = "Name", value = "Name"),
                          list(label = "Artist", value = "Artist")),
-          value = "Name",
-          labelStyle = list(display = "inline-block")
-        ),
-        dccGraph(id = "top10plot"),
-        style = list(width = "100%", padding = "10px 5px")
-      ),
-      div(
-        dccGraph(id = "countvsyear"),
-        style = list(width = "100%", padding = "10px 5px")
-      ),
-      div(
-        dccGraph(id = "subgenre"),
-        style = list(width = "100%", padding = "10px 5px")
-      )
-      )
-    )
-  )
+                        value = "Name",
+                        labelStyle = list(display = "inline-block")
+                      )
+                    ),
+                    dccGraph(id = "top10plot"),
+                    style = list(width = "80%", padding = "10px 5px"),
+                    md = 6
+                ),
+                dbcCol(
+                    div(
+                      dccGraph(id = "popvsyear"),
+                      style = list(width = "80%", padding = "10px 5px")
+                    ),
+                    md = 6
+                )
+              )
+
+          )
+)
+
+row2 <- div(
+          dbcRow(
+                list(
+                  dbcCol(
+                    div(
+                      dccGraph(id = "subgenre"),
+                      style = list(width = "80 %", padding = "10px 5px")
+                    ),
+                    md = 6
+                  ),
+                  dbcCol(
+                    div(
+                      dccGraph(id = "countvsyear"),
+                      style = list(width = "80%", padding = "10px 5px")
+                    ),
+                    md = 6
+                  )
+                )
+          )
+)
+
+app <- Dash$new(external_stylesheets = dbcThemes$BOOTSTRAP)
+
+app %>% set_layout(tophead, dropdown, row1, row2)
+
 
 
 app |> add_callback(
@@ -121,6 +176,19 @@ app |> add_callback(
                               Year >= as.integer(years[[1]]),
                               Year <= as.integer(years[[2]]))
     p <- count_vs_year(new_data)
+    ggplotly(p)
+  }
+)
+
+app |> add_callback(
+  output("popvsyear", "figure"),
+  list(input("genre-widget", "value"),
+       input("year-widget", "value")),
+  function(genres, years) {
+    new_data <- data |> filter(Playlist.Genre %in% genres,
+                               Year >= as.integer(years[[1]]),
+                               Year <= as.integer(years[[2]]))
+    p <- pop_vs_year(new_data)
     ggplotly(p)
   }
 )
