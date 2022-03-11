@@ -67,7 +67,7 @@ tophead <- div(
             dbcCol(
                 div("Spotified"), # nolint
                 width = 8,
-                style = list("color" = "green", "background-color" = "black", "textAlign" = "center", "height" = 50), # nolint
+                style = list("color" = "green", "background-color" = "black", "textAlign" = "center", "height" = 0), # nolint
                 md = 10 # nolint
             ),
             dbcCol(
