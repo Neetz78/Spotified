@@ -129,7 +129,7 @@ row1 <- div(
                 ),
                 dbcCol(
                     div(
-                      dccGraph(id = "popvsyear"),
+                      dccGraph(id = "countvsyear"),
                       style = list(width = "80%", padding = "10px 5px")
                     ),
                     md = 6
@@ -151,7 +151,7 @@ row2 <- div(
                   ),
                   dbcCol(
                     div(
-                      dccGraph(id = "countvsyear"),
+                      dccGraph(id = "popvsyear"),
                       style = list(width = "80%", padding = "10px 5px")
                     ),
                     md = 6
