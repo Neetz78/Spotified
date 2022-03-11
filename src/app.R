@@ -118,14 +118,13 @@ row1 <- div(
                     div(
                       dccRadioItems(
                         id = "top_n_type",
-                        options = list(list(label = "Name", value = "Name"),
-                         list(label = "Artist", value = "Artist")),
+                        options = list(list(label = "Name", value = "Name"),list(label = "Artist", value = "Artist")), # nolint
                         value = "Name",
                         labelStyle = list(display = "inline-block")
-                      )
-                    ),
+                      ),
                     dccGraph(id = "top10plot"),
-                    style = list(width = "80%", padding = "10px 5px"),
+                    style = list(width = "80%", padding = "10px 5px")
+                  ),
                     md = 6
                 ),
                 dbcCol(
