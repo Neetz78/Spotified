@@ -34,8 +34,8 @@ top_n_by_popularity <- function(data, ycol="Name") {
   colnames(data_filtered_top10) <- c("field", "Popularity")
   chart <- ggplot(data_filtered_top10, aes(x = reorder(field, Popularity) , y = Popularity, color = field)) + # nolint
     geom_col() +
-    theme(axis.title = element_text(face="bold"))+labs(y= "Popularity", x = ycol) # nolint
-  chart + coord_flip()
+    theme(axis.title = element_text(face = "bold")) + labs(y = "Popularity", x = ycol) # nolint
+    chart + coord_flip() # nolint
 }
 
 sub_genre_plot <- function(data) {
@@ -49,8 +49,7 @@ sub_genre_plot <- function(data) {
       y = Playlist.Subgenre,
       color = Playlist.Subgenre,
       size = Count) +
-  geom_col(alpha = 0.7) +
-  coord_polar("y", start = 0) +
+  geom_point(alpha = 0.7) +
   labs(x = "Record Count", y = "Subgenre", legend = "Count") +
   theme_classic() +
   theme(axis.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
