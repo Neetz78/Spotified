@@ -49,7 +49,8 @@ sub_genre_plot <- function(data) {
       y = Playlist.Subgenre,
       color = Playlist.Subgenre,
       size = Count) +
-  geom_point(alpha = 0.7) +
+  geom_col(alpha = 0.7) +
+  coord_polar("y", start = 50) +
   labs(x = "Record Count", y = "Subgenre", legend = "Count") +
   theme_classic() +
   theme(axis.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
@@ -65,16 +66,17 @@ tophead <- div(
             dbcCol(
                 div("Spotified"), # nolint
                 width = 8,
-                style = list("color" = "green", "background-color" = "black", "textAlign" = "center", "height" = 0), # nolint
+                style = list("color" = "green", "textAlign" = "center",  "font-size" = 40, "margin-top" = 10), # nolint
                 md = 10 # nolint
             ),
             dbcCol(
                 img(
                     src = "assets/logo1.png",
-                    style = list("color" = "green", "background-color" = "black", "textAlign" = "center", "height" = 50)# nolint
+                    style = list("height" = 50, "margin-top" = 15)# nolint
                 )
             )
-        )
+        ),
+        style = list("background-color" = "black", "height" = 70)
     )
 )
 
