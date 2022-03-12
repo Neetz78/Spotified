@@ -50,7 +50,7 @@ sub_genre_plot <- function(data) {
       color = Playlist.Subgenre,
       size = Count) +
   geom_col(alpha = 0.7) +
-  coord_polar("y", start = 50) +
+  coord_polar("y", start = 0) +
   labs(x = "Record Count", y = "Subgenre", legend = "Count") +
   theme_classic() +
   theme(axis.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
