@@ -67,16 +67,17 @@ tophead <- div(
             dbcCol(
                 div("Spotified"), # nolint
                 width = 8,
-                style = list("color" = "green", "background-color" = "black", "textAlign" = "center", "height" = 0), # nolint
+                style = list("color" = "green", "textAlign" = "center",  "font-size" = 40, "margin-top" = 10), # nolint
                 md = 10 # nolint
             ),
             dbcCol(
                 img(
                     src = "assets/logo1.png",
-                    style = list("color" = "green", "background-color" = "black", "textAlign" = "center", "height" = 50)# nolint
+                    style = list( "height" = 50, "margin-top" = 15)# nolint
                 )
             )
-        )
+        ),
+        style = list( "background-color" = "black", "height" = 70)
     )
 )
 
@@ -217,4 +218,5 @@ app |> add_callback(
   }
 )
 
-app %>% run_app()
+#app %>% run_app()
+app$run_server(debug = T)
