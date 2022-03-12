@@ -4,8 +4,6 @@ library(dashHtmlComponents)
 library(tidyverse)
 library(ggplot2)
 library(plotly)
-library(repr)
-options(repr.plot.width = 10, repr.plot.height = 8)
 
 data <- read.csv("https://github.com/ubco-mds-2021-labs/dashboard1-group-g/raw/main/data/clean_spotify.csv", sep = "\t") # nolint
 year_list <- as.list(as.character(seq(1957, 2020, by = 3)))
@@ -51,7 +49,8 @@ sub_genre_plot <- function(data) {
       y = Playlist.Subgenre,
       color = Playlist.Subgenre,
       size = Count) +
-  geom_point(alpha = 0.7) +
+  geom_col(alpha = 0.7) +
+  coord_polar("y", start = 0) +
   labs(x = "Record Count", y = "Subgenre", legend = "Count") +
   theme_classic() +
   theme(axis.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
@@ -72,7 +71,7 @@ tophead <- div(
             ),
             dbcCol(
                 img(
-                    src = "data/assets/logo1.png",
+                    src = "assets/logo1.png",
                     style = list("color" = "green", "background-color" = "black", "textAlign" = "center", "height" = 50)# nolint
                 )
             )
