@@ -2,7 +2,6 @@ library(dash)
 library(dashCoreComponents)
 library(dashHtmlComponents)
 library(tidyverse)
-library(ggplot2)
 library(plotly)
 
 data <- read.csv("https://github.com/ubco-mds-2021-labs/dashboard1-group-g/raw/main/data/clean_spotify.csv", sep = "\t") # nolint
@@ -49,15 +48,16 @@ sub_genre_plot <- function(data) {
       y = Playlist.Subgenre,
       color = Playlist.Subgenre,
       size = Count) +
-  geom_col(alpha = 0.7) +
-  coord_polar("y", start = 0) +
+  geom_point(alpha = 0.7) +
+  #geom_col(alpha = 0.7) +
+  #coord_polar("y", start = 0) +
   labs(x = "Record Count", y = "Subgenre", legend = "Count") +
   theme_classic() +
   theme(axis.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
         axis.text = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
         legend.text = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
         legend.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black") # nolint
-)
+  )
 }
 
 tophead <- div(
@@ -87,6 +87,7 @@ dropdown <- div(
       padding = "10px 5px"
     ),
     div(
+      html$label("Genre"),
       dccDropdown(
         id = "genre-widget",
         options = list(list(label = "Pop", value = "Pop"),
@@ -112,6 +113,11 @@ dropdown <- div(
 )
 
 row1 <- div(
+  style = list(
+      borderBottom = "thin lightgrey solid",
+      backgroundColor = "#d8f1c0",
+      padding = "10px 5px"
+    ),
           dbcRow(
               list(
                 dbcCol(
@@ -123,14 +129,14 @@ row1 <- div(
                         labelStyle = list(display = "inline-block")
                       ),
                     dccGraph(id = "top10plot"),
-                    style = list(width = "80%", padding = "10px 5px")
+                    style = list(width = "80%", padding = "10px 5px", backgroundColor = "#d8f1c0") # nolint
                   ),
                     md = 6
                 ),
                 dbcCol(
                     div(
                       dccGraph(id = "countvsyear"),
-                      style = list(width = "80%", padding = "10px 5px")
+                      style = list(width = "80%", padding = "10px 5px", backgroundColor = "#d8f1c0") # nolint
                     ),
                     md = 6
                 )
@@ -140,19 +146,24 @@ row1 <- div(
 )
 
 row2 <- div(
+  style = list(
+      borderBottom = "thin lightgrey solid",
+      backgroundColor = "#d8f1c0",
+      padding = "10px 5px"
+    ),
           dbcRow(
                 list(
                   dbcCol(
                     div(
                       dccGraph(id = "subgenre"),
-                      style = list(width = "80 %", padding = "10px 5px")
+                      style = list(width = "80 %", padding = "10px 5px", backgroundColor = "#d8f1c0") # nolint
                     ),
                     md = 6
                   ),
                   dbcCol(
                     div(
                       dccGraph(id = "popvsyear"),
-                      style = list(width = "80%", padding = "10px 5px")
+                      style = list(width = "80%", padding = "10px 5px", backgroundColor = "#d8f1c0") # nolint
                     ),
                     md = 6
                   )
