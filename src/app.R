@@ -219,9 +219,12 @@ app |> add_callback(
 
 app |> add_callback(
   output("subgenre", "figure"),
-  list(input("genre-widget", "value")),
-  function(genres) {
-    new_data <- data |> filter(Playlist.Genre %in% genres)
+  list(input("genre-widget", "value"),
+  input("year-widget", "value")),
+  function(genres, years) {
+    new_data <- data |> filter(Playlist.Genre %in% genres,
+                              Year >= as.integer(years[[1]]),
+                              Year <= as.integer(years[[2]]))
     p <- sub_genre_plot(new_data)
     ggplotly(p)
 
