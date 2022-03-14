@@ -1,6 +1,7 @@
 library(dash)
 library(tidyverse)
 library(plotly)
+library(dashHtmlComponents)
 
 data <- read.csv("https://github.com/ubco-mds-2021-labs/dashboard1-group-g/raw/main/data/clean_spotify.csv", sep = "\t") # nolint
 year_list <- as.list(as.character(seq(1957, 2020, by = 3)))
