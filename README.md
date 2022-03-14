@@ -37,4 +37,4 @@ If you are interested in contributing to our application, please let us know thr
 
 1. Clone the project from Github.
 2. Install dependencies on your local computer for this project.
-3. Open a terminal in the project, run `python Plot1_app.py`, then navigate to localhost:8050 in your web browser to see the running application.
+3. Open a terminal in the project, run `source("app.R") ', then navigate to localhost:8050 in your web browser to see the running application.
