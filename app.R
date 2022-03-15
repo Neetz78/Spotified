@@ -230,4 +230,4 @@ app |> add_callback(
   }
 )
 
-app %>% run_app()
+app$run_server(host = '0.0.0.0')
