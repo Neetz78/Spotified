@@ -212,7 +212,8 @@ app |> add_callback(
                               Year >= as.integer(years[[1]]),
                               Year <= as.integer(years[[2]]))
     p <- top_n_by_popularity(new_data, yaxis)
-    ggplotly(p)
+    ggplotly(p)%>% 
+      layout(showlegend = FALSE)
   }
 )
 
