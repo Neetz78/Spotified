@@ -1,10 +1,7 @@
 library(dash)
-<<<<<<< HEAD
-library(dashHtmlComponents)
-=======
->>>>>>> 01e3516aae122b4a75f1a282c4454e7d8a22f720
 library(tidyverse)
 library(plotly)
+library(dashHtmlComponents)
 
 data <- read.csv("https://github.com/ubco-mds-2021-labs/dashboard1-group-g/raw/main/data/clean_spotify.csv", sep = "\t") # nolint
 year_list <- as.list(as.character(seq(1957, 2020, by = 3)))
@@ -50,9 +47,9 @@ sub_genre_plot <- function(data) {
       y = Playlist.Subgenre,
       color = Playlist.Subgenre,
       size = Count) +
-  ggplot2::geom_point(alpha = 0.7) +
-  #ggplot2::geom_col(alpha = 0.7) +
-  #ggplot2::coord_polar("y", start = 0) +
+  geom_point(alpha = 0.7) +
+  #geom_col(alpha = 0.7) +
+  #coord_polar("y", start = 0) +
   labs(x = "Record Count", y = "Subgenre", legend = "Count") +
   theme_classic() +
   theme(axis.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
@@ -61,7 +58,6 @@ sub_genre_plot <- function(data) {
         legend.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black") # nolint
   )
 }
-
 
 tophead <- div(
     dbcRow(
@@ -216,7 +212,8 @@ app |> add_callback(
                               Year >= as.integer(years[[1]]),
                               Year <= as.integer(years[[2]]))
     p <- top_n_by_popularity(new_data, yaxis)
-    ggplotly(p)
+    ggplotly(p)%>% 
+      layout(showlegend = FALSE)
   }
 )
 
@@ -234,4 +231,4 @@ app |> add_callback(
   }
 )
 
-app %>% run_app()
+app$run_server(host = '0.0.0.0')
