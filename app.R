@@ -3,6 +3,7 @@ library(tidyverse)
 library(plotly)
 library(dashHtmlComponents)
 
+#Read in the data. 
 data <- read.csv("https://github.com/ubco-mds-2021-labs/dashboard1-group-g/raw/main/data/clean_spotify.csv", sep = "\t") # nolint
 year_list <- as.list(as.character(seq(1957, 2020, by = 3)))
 names(year_list) <- as.character(seq(1957, 2020, by = 3))
@@ -231,4 +232,5 @@ app |> add_callback(
   }
 )
 
-app$run_server(host = '0.0.0.0')
+# app$run_server(host = '0.0.0.0')
+app$run_server()
