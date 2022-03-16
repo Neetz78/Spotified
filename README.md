@@ -1,6 +1,6 @@
 # Spotified (Group G)
 
-(Link to Deployed App)[https://spotified-r.herokuapp.com/]
+[Link to Deployed App](https://spotified-r.herokuapp.com/)
 
 ## Goals
 
