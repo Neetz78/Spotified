@@ -1,5 +1,7 @@
 # Spotified (Group G)
 
+(Link to Deployed App)[https://spotified-r.herokuapp.com/]
+
 ## Goals
 
 - To determine which songs and artists have been the most popular over time. 
