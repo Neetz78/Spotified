@@ -1,8 +1,5 @@
 library(dash)
-<<<<<<< HEAD
 library(dashHtmlComponents)
-=======
->>>>>>> 01e3516aae122b4a75f1a282c4454e7d8a22f720
 library(tidyverse)
 library(plotly)
 
