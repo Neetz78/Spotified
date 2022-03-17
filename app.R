@@ -11,14 +11,24 @@ count_vs_year <- function(data) {
   plot <- ggplot(data, aes(x = Year, color = Playlist.Genre)) +
     geom_line(stat = "count") +
     theme_classic() +
-    labs(x = "Album Release Year", y = "Number of Songs Released", color = "Genre") # nolint
+    labs(x = "Album Release Year", y = "Number of Songs Released", color = "Genre") + # nolint
+    theme(axis.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
+        axis.text = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
+        legend.text = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
+        legend.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black") # nolint
+  )# nolint
 }
 
 pop_vs_year <- function(data) {
   plot <- ggplot(data, aes(x = Year, y = Popularity, color = Playlist.Genre)) +
     geom_line(stat = "summary", fun = mean) +
     theme_classic() +
-    labs(x = "Album Release Year", y = "Mean of Popularity", color = "Genre") # nolint
+    labs(x = "Album Release Year", y = "Mean of Popularity", color = "Genre") +
+    theme(axis.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
+        axis.text = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
+        legend.text = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
+        legend.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black") # nolint
+  ) # nolint
 }
 
 top_n_by_popularity <- function(data, ycol="Name") {
@@ -32,7 +42,11 @@ top_n_by_popularity <- function(data, ycol="Name") {
   colnames(data_filtered_top10) <- c("field", "Popularity")
   chart <- ggplot(data_filtered_top10, aes(x = reorder(field, Popularity) , y = Popularity, color = field)) + # nolint
     geom_col() +
-    theme(axis.title = element_text(face = "bold")) + labs(y = "Popularity", x = ycol) # nolint
+    theme(axis.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
+        axis.text = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
+        legend.text = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
+        legend.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black") # nolint
+  ) # nolint
     chart + coord_flip() # nolint
 }
 
@@ -59,13 +73,22 @@ sub_genre_plot <- function(data) {
   )
 }
 
+subgenre <- function(data) {
+    newdata <- data %>%
+  group_by(Playlist.Subgenre) %>%
+  count(Playlist.Subgenre) %>%
+  setNames(c("Playlist_Subgenre", "Count"))
+    fig <- plot_ly(newdata,labels = ~Playlist_Subgenre, values = ~Count) # nolint
+    fig <- fig %>% add_pie(hole = 0.3) # nolint
+}
+
 tophead <- div(
     dbcRow(
         list(
             dbcCol(
                 div("Spotified"), # nolint
                 width = 8,
-                style = list("color" = "green", "textAlign" = "center",  "font-size" = 40, "margin-top" = 10), # nolint
+                style = list("color" = "black", "textAlign" = "center",  "font-size" = 40, "margin-top" = 10), # nolint
                 md = 10 # nolint
             ),
             dbcCol(
@@ -75,7 +98,7 @@ tophead <- div(
                 )
             )
         ),
-        style = list("background-color" = "black", "height" = 70)
+        style = list("background-color" = "#c7f39e", "height" = 70)
     )
 )
 
@@ -212,7 +235,7 @@ app |> add_callback(
                               Year >= as.integer(years[[1]]),
                               Year <= as.integer(years[[2]]))
     p <- top_n_by_popularity(new_data, yaxis)
-    ggplotly(p)%>% 
+    ggplotly(p) %>%
       layout(showlegend = FALSE)
   }
 )
@@ -225,10 +248,10 @@ app |> add_callback(
     new_data <- data |> filter(Playlist.Genre %in% genres,
                               Year >= as.integer(years[[1]]),
                               Year <= as.integer(years[[2]]))
-    p <- sub_genre_plot(new_data)
+    p <- subgenre(new_data)
     ggplotly(p)
 
   }
 )
 
-app$run_server(host = '0.0.0.0')
+app$run_server()
