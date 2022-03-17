@@ -161,7 +161,7 @@ dropdown <- div(
         list(label = "R&B", value = "R&B"),
         list(label = "Edm", value = "Edm")
       ),
-      value = unique(data$Playlist.Genre),
+      value = unique(by_genre$Playlist.Genre),
       multi = TRUE
     ),
     # Make the year slider, set the deafult value to the entire year range.
