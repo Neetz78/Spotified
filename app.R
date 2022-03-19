@@ -140,6 +140,14 @@ count_vs_subgenre <- function(df) {
 
 }
 
+#' count_vs_subgenre()
+#'
+#' @param df the filtered data frame you with information you want plotted.
+#'
+#' @return a pie chart showing the number of records released in each genre in the provided data frame. # nolint
+#' @export
+#'
+#' @examples subgenre(df)
 subgenre <- function(data) {
     newdata <- data %>%
   group_by(Playlist.Subgenre) %>%
@@ -160,7 +168,7 @@ tophead <- div(
       dbcCol(
         div("Spotified"), # nolint
         width = 8,
-        style = list("color" = "#595959", "textAlign" = "center", "font-size" = 40, "margin-top" = 10), # nolint
+        style = list("color" = "#363636", "textAlign" = "center", "font-size" = 40, "margin-top" = 10), # nolint
         md = 10 # nolint
       ),
       dbcCol(
@@ -184,6 +192,7 @@ dropdown <- div(
   # Make the genre widget and set the default to all.
   div(
     html$label("Genre"),
+    dbcCol(
     dccDropdown(
       id = "genre-widget",
       options = list(
@@ -196,6 +205,8 @@ dropdown <- div(
       ),
       value = unique(by_genre$Playlist.Genre),
       multi = TRUE
+    ),
+      md = 6
     ),
     # Make the year slider, set the deafult value to the entire year range.
     htmlDiv(list(
@@ -237,13 +248,8 @@ row1 <- div(
       # Second column has the count of records released over time plot.
       dbcCol(
         div(
-<<<<<<< HEAD
-          dccGraph(id = "subgenre"),
-          style = list(width = "80%", padding = "10px 5px", backgroundColor = "#d8f1c0") # nolint
-=======
           dccGraph(id = "countvsyear"),
           style = list(width = "100%", padding= "34px 30px 0px 0px", backgroundColor = "#d8f1c0") # nolint
->>>>>>> fb614cd9c2e44f634901657b5b906e23df7944bb
         ),
         md = 6
       )
@@ -263,13 +269,8 @@ row2 <- div(
       # First column has the count of songs in each subgenre plot.
       dbcCol(
         div(
-<<<<<<< HEAD
-          dccGraph(id = "countvsyear"),
-          style = list(width = "80 %", padding = "10px 5px", backgroundColor = "#d8f1c0") # nolint
-=======
           dccGraph(id = "subgenre"),
           style = list(width = "100%", padding = "10px 0px 0px 30px", backgroundColor = "#d8f1c0") # nolint
->>>>>>> fb614cd9c2e44f634901657b5b906e23df7944bb
         ),
         md = 6
       ),
@@ -309,10 +310,10 @@ app |> add_callback(
       Year <= as.integer(years[[2]])
     )
     p <- count_vs_year(new_data)
-    # Reference: disable zoom interactive if needed: https://community.plotly.com/t/disable-interactions-in-plotly-for-r-and-ggplot2/1361
-    #ggplotly(p) |> layout(xaxis=list(fixedrange=TRUE)) |> layout(yaxis=list(fixedrange=TRUE))
-    # Reference: for disable legend click: https://stackoverflow.com/questions/51877429/disable-the-legend-double-click-event
-    ggplotly(p)  |> layout(legend = list(itemclick=FALSE, itemdoubleclick = FALSE))
+    # Reference: disable zoom interactive if needed: https://community.plotly.com/t/disable-interactions-in-plotly-for-r-and-ggplot2/1361 # nolint
+    #ggplotly(p) |> layout(xaxis=list(fixedrange=TRUE)) |> layout(yaxis=list(fixedrange=TRUE)) # nolint
+    # Reference: for disable legend click: https://stackoverflow.com/questions/51877429/disable-the-legend-double-click-event # nolint
+    ggplotly(p)  |> layout(legend = list(itemclick=FALSE, itemdoubleclick = FALSE)) # nolint
   }
 )
 
@@ -333,7 +334,7 @@ app |> add_callback(
     )
     p <- subgenre_pop(new_data)
     ggplotly(p) |>
-      layout(showlegend = FALSE) |> layout(xaxis=list(fixedrange=TRUE)) |> layout(yaxis=list(fixedrange=TRUE))
+      layout(showlegend = FALSE) |> layout(xaxis=list(fixedrange=TRUE)) |> layout(yaxis=list(fixedrange=TRUE)) # nolint
   }
 )
 
@@ -353,15 +354,9 @@ app |> add_callback(
       Year <= as.integer(years[[2]])
     )
     p <- top_n_by_popularity(new_data, yaxis)
-<<<<<<< HEAD
     ggplotly(p, tooltip = "text") |>
-      layout(showlegend = FALSE)
-=======
-    ggplotly(p,tooltip = "text") |>
-      layout(showlegend = FALSE) |> layout(xaxis=list(fixedrange=TRUE)) |> layout(yaxis=list(fixedrange=TRUE))
-   
->>>>>>> fb614cd9c2e44f634901657b5b906e23df7944bb
-  }
+      layout(showlegend = FALSE) |> layout(xaxis=list(fixedrange=TRUE)) |> layout(yaxis=list(fixedrange=TRUE)) # nolint
+      }
 )
 
 # Callback to filter the data using the year slider and
@@ -378,8 +373,8 @@ app |> add_callback(
       Year >= as.integer(years[[1]]),
       Year <= as.integer(years[[2]])
     )
-    p <- subgenre(new_data)
-    ggplotly(p)
+    p <- count_vs_subgenre(new_data)
+    ggplotly(p) |> layout(showlegend = FALSE)
   }
 )
 
