@@ -226,7 +226,7 @@ row1 <- div(
             labelStyle = list(display = "inline-block")
           ),
           dccGraph(id = "top10plot"),
-          style = list(width = "80%", padding = "10px 5px", backgroundColor = "#d8f1c0") # nolint
+          style = list(width = "100%", padding = "10px 0px 0px 30px", backgroundColor = "#d8f1c0") # nolint
         ),
         md = 6
       ),
@@ -234,7 +234,7 @@ row1 <- div(
       dbcCol(
         div(
           dccGraph(id = "countvsyear"),
-          style = list(width = "80%", padding = "10px 5px", backgroundColor = "#d8f1c0") # nolint
+          style = list(width = "100%", padding= "34px 30px 0px 0px", backgroundColor = "#d8f1c0") # nolint
         ),
         md = 6
       )
@@ -255,7 +255,7 @@ row2 <- div(
       dbcCol(
         div(
           dccGraph(id = "subgenre"),
-          style = list(width = "80 %", padding = "10px 5px", backgroundColor = "#d8f1c0") # nolint
+          style = list(width = "100%", padding = "10px 0px 0px 30px", backgroundColor = "#d8f1c0") # nolint
         ),
         md = 6
       ),
@@ -263,7 +263,7 @@ row2 <- div(
       dbcCol(
         div(
           dccGraph(id = "subgenre_popularity"),
-          style = list(width = "80%", padding = "10px 5px", backgroundColor = "#d8f1c0") # nolint
+          style = list(width = "100%", padding = "10px 30px 0px 0px", backgroundColor = "#d8f1c0") # nolint
         ),
         md = 6
       )
@@ -295,7 +295,10 @@ app |> add_callback(
       Year <= as.integer(years[[2]])
     )
     p <- count_vs_year(new_data)
-    ggplotly(p)
+    # Reference: disable zoom interactive if needed: https://community.plotly.com/t/disable-interactions-in-plotly-for-r-and-ggplot2/1361
+    #ggplotly(p) |> layout(xaxis=list(fixedrange=TRUE)) |> layout(yaxis=list(fixedrange=TRUE))
+    # Reference: for disable legend click: https://stackoverflow.com/questions/51877429/disable-the-legend-double-click-event
+    ggplotly(p)  |> layout(legend = list(itemclick=FALSE, itemdoubleclick = FALSE))
   }
 )
 
@@ -316,7 +319,7 @@ app |> add_callback(
     )
     p <- subgenre_pop(new_data)
     ggplotly(p) |>
-      layout(showlegend = FALSE)
+      layout(showlegend = FALSE) |> layout(xaxis=list(fixedrange=TRUE)) |> layout(yaxis=list(fixedrange=TRUE))
   }
 )
 
@@ -337,7 +340,8 @@ app |> add_callback(
     )
     p <- top_n_by_popularity(new_data, yaxis)
     ggplotly(p,tooltip = "text") |>
-      layout(showlegend = FALSE)
+      layout(showlegend = FALSE) |> layout(xaxis=list(fixedrange=TRUE)) |> layout(yaxis=list(fixedrange=TRUE))
+   
   }
 )
 
