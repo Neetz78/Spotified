@@ -14,6 +14,7 @@ top_data <- list("Name" = top_songs, "Artist" = top_artists) # nolint
 year_list <- as.list(as.character(seq(1957, 2020, by = 3)))
 names(year_list) <- as.character(seq(1957, 2020, by = 3))
 
+
 ## -----------------Functions to make plots-----------------#
 
 #' count_vs_year
@@ -145,7 +146,8 @@ subgenre <- function(data) {
   count(Playlist.Subgenre) %>%
   setNames(c("Playlist_Subgenre", "Count"))
     fig <- plot_ly(newdata,labels = ~Playlist_Subgenre, values = ~Count, marker=list(colors = c("#6867AC","#A267AC","#CE7BB0","#FFBCD1","#845460","#EAD3CB","#BDC7C9","#2B4F60","#7FC8A9","#D5EEBB","#5F7A61","#444941"))) # nolint
-    fig <- fig %>% add_pie(hole = 0.3) # nolint
+    fig <- fig %>% add_pie(hole = 0.3)# nolint
+    fig <- fig %>% layout(title = 'Record Count by Subgenres', plot_bgcolor = "#d8f1bb") # nolint
 }
 
 
@@ -230,15 +232,15 @@ row1 <- div(
           dccGraph(id = "top10plot"),
           style = list(width = "80%", padding = "10px 5px", backgroundColor = "#d8f1c0") # nolint
         ),
-        md = 4
+        md = 6
       ),
       # Second column has the count of records released over time plot.
       dbcCol(
         div(
-          dccGraph(id = "countvsyear"),
+          dccGraph(id = "subgenre"),
           style = list(width = "80%", padding = "10px 5px", backgroundColor = "#d8f1c0") # nolint
         ),
-        md = 8
+        md = 6
       )
     )
   )
@@ -256,10 +258,10 @@ row2 <- div(
       # First column has the count of songs in each subgenre plot.
       dbcCol(
         div(
-          dccGraph(id = "subgenre"),
+          dccGraph(id = "countvsyear"),
           style = list(width = "80 %", padding = "10px 5px", backgroundColor = "#d8f1c0") # nolint
         ),
-        md = 4
+        md = 6
       ),
       # Second column has the popularity of subgrenres
       dbcCol(
@@ -267,7 +269,7 @@ row2 <- div(
           dccGraph(id = "subgenre_popularity"),
           style = list(width = "80%", padding = "10px 5px", backgroundColor = "#d8f1c0") # nolint
         ),
-        md = 8
+        md = 6
       )
     )
   )
