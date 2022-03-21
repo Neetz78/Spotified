@@ -124,7 +124,8 @@ count_vs_subgenre <- function(df) {
       x = Count,
       y = Playlist.Subgenre,
       color = Playlist.Subgenre,
-      size = Count
+      size = Count,
+      text = paste("Sub-genre :",Playlist.Subgenre,"\n Count :",Count)
     ) +
     geom_point(alpha = 0.7) +
     labs(x = "Record Count", y = "Subgenre", legend = "Count") +
@@ -374,7 +375,7 @@ app |> add_callback(
       Year <= as.integer(years[[2]])
     )
     p <- count_vs_subgenre(new_data)
-    ggplotly(p) |> layout(showlegend = FALSE)
+    ggplotly(p, tooltip = "text") |> layout(showlegend = FALSE)
   }
 )
 
