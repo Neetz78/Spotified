@@ -393,5 +393,5 @@
   )
   
   ## -----------------Run the App-----------------##
-  # app$run_server(host = '0.0.0.0') # nolint
-  app$run_server(debug = TRUE)
+  app$run_server(host = '0.0.0.0') # nolint
+  #app$run_server(debug = TRUE)
