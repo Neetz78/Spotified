@@ -23,9 +23,7 @@ Spotify is a very large music platform with subscribers from all around the worl
 
 ## About this Dashboard
 
-The app opens initially to show the top 10 songs in the whole dataset, both the number of tracks released and mean popularity per year for each of the genres, and the breakdown of the number of tracks into subgenres. This is done by arranging the plots in a grid. In the top left, the top 10 songs or artists are displayed. In the top right, the number of songs released in each genre per year is shown. In the bottom left, the breakdown of all selected genres into subgenres by number of released songs can be seen. Finally, in the bottomw right, the mean popularity of songs in each genre per year is plotted. All four of these plots are updated by changing which genres are selected in the dropdown menu and by changing the year range in the slider bar. To switch between showing the top 10 artists and top 10 songs for the selected year range and genres, the bottom drop down menu can be used. 
-
-If time permits, we will also include two modelling tabs, one for predicting song genre, and one for predicting song popularity. 
+has four plots arranged in a grid. In the top left, there is a bar chart showing either the top 10 artists by popularity, or the top 10 songs, which can be switch using the radio button above it. In the top right plot, we have the number of songs released each year in the six different genres. Then in the bottom left, we have a bubble chart showing the count of records released in each of the subgenres. Finally, in the bottom right, we have a bar chart with the top 10 subgenres by popularity. The data shown in all four of these plots is changed based on which genres are selected in the dropdown menu and which years are selected in the range slider. Overall, we have implemented everything we planned on implementing thus far. 
 
 ![](assets/Rgif.gif)
 
