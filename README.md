@@ -25,7 +25,7 @@ Spotify is a very large music platform with subscribers from all around the worl
 
 has four plots arranged in a grid. In the top left, there is a bar chart showing either the top 10 artists by popularity, or the top 10 songs, which can be switch using the radio button above it. In the top right plot, we have the number of songs released each year in the six different genres. Then in the bottom left, we have a bubble chart showing the count of records released in each of the subgenres. Finally, in the bottom right, we have a bar chart with the top 10 subgenres by popularity. The data shown in all four of these plots is changed based on which genres are selected in the dropdown menu and which years are selected in the range slider. Overall, we have implemented everything we planned on implementing thus far. 
 
-![](assets/Rgif.gif)
+![](assets/finalgif.gif)
 
 ## Describe your dataset in about 150-200 words
 
