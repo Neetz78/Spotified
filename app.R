@@ -14,34 +14,36 @@ top_data <- list("Name" = top_songs, "Artist" = top_artists) # nolint
 year_list <- as.list(as.character(seq(1957, 2020, by = 3)))
 names(year_list) <- as.character(seq(1957, 2020, by = 3))
 
+
 ## -----------------Functions to make plots-----------------#
 
 #' count_vs_year
 #'
 #' @param df the filtered data frame you with information you want plotted.
 #'
-#' @return a line chart showing the count of records released in each genre over time.
+#' @return a line chart showing the count of records released in each genre over time. # nolint
 #' @export
 #'
 #' @examples count_vs_year(df)
 count_vs_year <- function(df) {
-  plot <- ggplot(df, aes(x = Year, y = Number.of.Songs, color = Playlist.Genre)) +
+  plot <- ggplot(df, aes(x = Year, y = Number.of.Songs, color = Playlist.Genre)) + # nolint
     geom_line(stat = "summary", fun = sum) +
     theme_classic() +
-    labs(x = "Album Release Year", y = "Number of Songs Released", color = "Genre") +ggtitle("Count of Songs Released by Year")+theme(plot.title = element_text(face = "bold"),axis.title = element_text(face = "bold"))
-  # nolint
+    labs(x = "Album Release Year", y = "Number of Songs Released", color = "Genre") + # nolint
+    ggtitle("Count of Songs Released by Year") +
+    theme(plot.title = element_text(face = "bold"),axis.title = element_text(face = "bold")) # nolint
 }
 
 #' pop_vs_year()
 #'
 #' @param df the filtered data frame you with information you want plotted.
 #'
-#' @return a line chart showing the average popularity of records released in each genre over time.
+#' @return a line chart showing the average popularity of records released in each genre over time. # nolint
 #' @export
 #'
 #' @examples popularity_vs_year(df)
 pop_vs_year <- function(df) {
-  plot <- ggplot(df, aes(x = Year, y = Mean.Popularity, color = Playlist.Genre)) +
+  plot <- ggplot(df, aes(x = Year, y = Mean.Popularity, color = Playlist.Genre)) + # nolint
     geom_line(stat = "summary", fun = mean) +
     theme_classic() +
     labs(x = "Album Release Year", y = "Mean of Popularity", color = "Genre")
@@ -50,17 +52,18 @@ pop_vs_year <- function(df) {
 
 
 subgenre_pop <- function(df) {
-  
-  data_filtered<-df%>%select(Playlist.Subgenre,Mean.Popularity)%>%group_by(Playlist.Subgenre)%>%summarize(
-    Popularity=mean(Mean.Popularity))%>%arrange(desc(Popularity))
-  
-  data_filtered_top10<-data_filtered[1:10,]
-  
-  chart <- ggplot(data_filtered_top10, aes(x=reorder(Playlist.Subgenre ,Popularity) ,y=Popularity,color=Playlist.Subgenre)) + 
-    geom_col()+
-    labs(y = "Popularity", x = "Subgenres")+ggtitle("Top 10 Subgenres by Popularity")+theme(plot.title = element_text(face = "bold"),axis.title = element_text(face = "bold"))
-  
-  chart+coord_flip()
+  data_filtered <- df %>%
+                select(Playlist.Subgenre, Mean.Popularity) %>%
+                group_by(Playlist.Subgenre) %>%
+                summarize(Popularity = mean(Mean.Popularity)) %>%
+                arrange(desc(Popularity))
+  data_filtered_top10 <- data_filtered[1:10, ] # nolint
+  chart <- ggplot(data_filtered_top10, aes(x = reorder(Playlist.Subgenre, Popularity) , y = Popularity, color = Playlist.Subgenre)) +  # nolint
+    geom_col() +
+    labs(y = "Popularity", x = "Subgenres") +
+    ggtitle("Top 10 Subgenres by Popularity") +
+    theme(plot.title = element_text(face = "bold"),axis.title = element_text(face = "bold")) # nolint
+  chart + coord_flip()
 }
 
 #' top_n_by_popularity()
@@ -68,7 +71,7 @@ subgenre_pop <- function(df) {
 #' @param df
 #' @param ycol either "Name" or "Artist", depending on which to show.
 #'
-#' @return a bar chart showing the top 10 songs or artists from the provided data frame.
+#' @return a bar chart showing the top 10 songs or artists from the provided data frame. # nolint
 #' @export
 #'
 #' @examples
@@ -78,39 +81,28 @@ top_n_by_popularity <- function(df, ycol = "Name") {
 
   if (ycol == "Name") {
     colnames(df) <- c("field", "Artist", "Popularity")
-    title_topn<- paste("Top 10 Songs by Popularity")
+    title_topn <- paste("Top 10 Songs by Popularity")
     df <- df |>
       group_by(field, Artist) |>
-      summarize( # no lint
-        Popularity = mean(Popularity)
-      ) |>
+      summarize(Popularity = mean(Popularity)) |>
       arrange(desc(Popularity))
     df <- df[1:10, ]
-    chart <- ggplot(df, aes(x = reorder(field, Popularity), y = Popularity, color = field,text=paste("Name:",field,"\n","Artist:",Artist,"\n Popularity:",Popularity)))
+    chart <- ggplot(df, aes(x = reorder(field, Popularity), y = Popularity, color = field,text=paste("Name:",field,"\n","Artist:",Artist,"\n Popularity:",Popularity))) # nolint
   } else {
-    title_topn<- paste("Top 10 Artists by Popularity")
+    title_topn <- paste("Top 10 Artists by Popularity")
     colnames(df) <- c("field", "Popularity")
     df <- df |>
       group_by(field) |>
-      summarize( # no lint
-        Popularity = mean(Popularity)
-      ) |>
+      summarize(Popularity = mean(Popularity)) |>
       arrange(desc(Popularity))
     df <- df[1:10, ]
-    chart <- ggplot(df, aes(x = reorder(field, Popularity), y = Popularity, color = field,text=paste("Artist:",field,"\n Popularity:",Popularity)))
+    chart <- ggplot(df, aes(x = reorder(field, Popularity), y = Popularity, color = field,text=paste("Artist:",field,"\n Popularity:",Popularity))) # nolint
   }
-
-
-  
-
-   # nolint
-    
-    
-    chart<-chart+geom_col() +
-    labs(y = "Popularity", x = ycol)+ggtitle(paste(title_topn))+theme(plot.title = element_text(face = "bold"),
-                                                                      axis.title = element_text(face = "bold"))
-
-  # nolint
+    chart <- chart + geom_col() +
+    labs(y = "Popularity", x = ycol) +
+    ggtitle(paste(title_topn)) +
+    theme(plot.title = element_text(face = "bold"), # nolint
+          axis.title = element_text(face = "bold"))
   chart + coord_flip() # nolint
 }
 
@@ -118,7 +110,7 @@ top_n_by_popularity <- function(df, ycol = "Name") {
 #'
 #' @param df the filtered data frame you with information you want plotted.
 #'
-#' @return a bubble chart showing the number of records released in each genre in the provided data frame.
+#' @return a bubble chart showing the number of records released in each genre in the provided data frame. # nolint
 #' @export
 #'
 #' @examples count_vs_subgenre(df)
@@ -138,14 +130,34 @@ count_vs_subgenre <- function(df) {
     labs(x = "Record Count", y = "Subgenre", legend = "Count") +
     theme_classic() +
     theme(
-      plot.title = element_text(family = "Helvetica", face = "bold",  colour = "black"),
+      plot.title = element_text(family = "Helvetica", face = "bold",  colour = "black"), # nolint
       axis.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
       axis.text = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
       legend.text = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
       legend.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black") # nolint
-    )+ggtitle("Record Count by Subgenres")
+    ) +
+    ggtitle("Record Count by Subgenres")
 
 }
+
+#' count_vs_subgenre()
+#'
+#' @param df the filtered data frame you with information you want plotted.
+#'
+#' @return a pie chart showing the number of records released in each genre in the provided data frame. # nolint
+#' @export
+#'
+#' @examples subgenre(df)
+subgenre <- function(data) {
+    newdata <- data %>%
+  group_by(Playlist.Subgenre) %>%
+  count(Playlist.Subgenre) %>%
+  setNames(c("Playlist_Subgenre", "Count"))
+    fig <- plot_ly(newdata,labels = ~Playlist_Subgenre, values = ~Count, marker=list(colors = c("#6867AC","#A267AC","#CE7BB0","#FFBCD1","#845460","#EAD3CB","#BDC7C9","#2B4F60","#7FC8A9","#D5EEBB","#5F7A61","#444941"))) # nolint
+    fig <- fig %>% add_pie(hole = 0.3)# nolint
+    fig <- fig %>% layout(title = 'Record Count by Subgenres', plot_bgcolor = "#d8f1bb") # nolint
+}
+
 
 ## -----------------Design the app layout.-----------------#
 
@@ -156,7 +168,7 @@ tophead <- div(
       dbcCol(
         div("Spotified"), # nolint
         width = 8,
-        style = list("color" = "#595959", "textAlign" = "center", "font-size" = 40, "margin-top" = 10), # nolint
+        style = list("color" = "#363636", "textAlign" = "center", "font-size" = 40, "margin-top" = 10), # nolint
         md = 10 # nolint
       ),
       dbcCol(
@@ -170,7 +182,7 @@ tophead <- div(
   )
 )
 
-# Make the widgets that control all visualizations (year slider and genre dropdown)
+# Make the widgets that control all visualizations (year slider and genre dropdown) # nolint
 dropdown <- div(
   style = list(
     borderBottom = "thin lightgrey solid",
@@ -180,6 +192,7 @@ dropdown <- div(
   # Make the genre widget and set the default to all.
   div(
     html$label("Genre"),
+    dbcCol(
     dccDropdown(
       id = "genre-widget",
       options = list(
@@ -192,6 +205,8 @@ dropdown <- div(
       ),
       value = unique(by_genre$Playlist.Genre),
       multi = TRUE
+    ),
+      md = 6
     ),
     # Make the year slider, set the deafult value to the entire year range.
     htmlDiv(list(
@@ -242,7 +257,7 @@ row1 <- div(
   )
 )
 
-# Make a row with the count of songs in each subgenre plot and the change in popularity over time plot.
+# Make a row with the count of songs in each subgenre plot and the change in popularity over time plot. # nolint
 row2 <- div(
   style = list(
     borderBottom = "thin lightgrey solid",
@@ -295,10 +310,10 @@ app |> add_callback(
       Year <= as.integer(years[[2]])
     )
     p <- count_vs_year(new_data)
-    # Reference: disable zoom interactive if needed: https://community.plotly.com/t/disable-interactions-in-plotly-for-r-and-ggplot2/1361
-    #ggplotly(p) |> layout(xaxis=list(fixedrange=TRUE)) |> layout(yaxis=list(fixedrange=TRUE))
-    # Reference: for disable legend click: https://stackoverflow.com/questions/51877429/disable-the-legend-double-click-event
-    ggplotly(p)  |> layout(legend = list(itemclick=FALSE, itemdoubleclick = FALSE))
+    # Reference: disable zoom interactive if needed: https://community.plotly.com/t/disable-interactions-in-plotly-for-r-and-ggplot2/1361 # nolint
+    #ggplotly(p) |> layout(xaxis=list(fixedrange=TRUE)) |> layout(yaxis=list(fixedrange=TRUE)) # nolint
+    # Reference: for disable legend click: https://stackoverflow.com/questions/51877429/disable-the-legend-double-click-event # nolint
+    ggplotly(p)  |> layout(legend = list(itemclick=FALSE, itemdoubleclick = FALSE)) # nolint
   }
 )
 
@@ -319,7 +334,7 @@ app |> add_callback(
     )
     p <- subgenre_pop(new_data)
     ggplotly(p) |>
-      layout(showlegend = FALSE) |> layout(xaxis=list(fixedrange=TRUE)) |> layout(yaxis=list(fixedrange=TRUE))
+      layout(showlegend = FALSE) |> layout(xaxis=list(fixedrange=TRUE)) |> layout(yaxis=list(fixedrange=TRUE)) # nolint
   }
 )
 
@@ -339,10 +354,9 @@ app |> add_callback(
       Year <= as.integer(years[[2]])
     )
     p <- top_n_by_popularity(new_data, yaxis)
-    ggplotly(p,tooltip = "text") |>
-      layout(showlegend = FALSE) |> layout(xaxis=list(fixedrange=TRUE)) |> layout(yaxis=list(fixedrange=TRUE))
-   
-  }
+    ggplotly(p, tooltip = "text") |>
+      layout(showlegend = FALSE) |> layout(xaxis=list(fixedrange=TRUE)) |> layout(yaxis=list(fixedrange=TRUE)) # nolint
+      }
 )
 
 # Callback to filter the data using the year slider and
@@ -360,10 +374,10 @@ app |> add_callback(
       Year <= as.integer(years[[2]])
     )
     p <- count_vs_subgenre(new_data)
-    ggplotly(p)
+    ggplotly(p) |> layout(showlegend = FALSE)
   }
 )
 
 ## -----------------Run the App-----------------##
-# app$run_server(host = '0.0.0.0')
+# app$run_server(host = '0.0.0.0') # nolint
 app$run_server(debug = TRUE)

@@ -1,4 +1,5 @@
 library(dash)
+library(dashHtmlComponents)
 library(tidyverse)
 library(plotly)
 
@@ -46,9 +47,9 @@ sub_genre_plot <- function(data) {
       y = Playlist.Subgenre,
       color = Playlist.Subgenre,
       size = Count) +
-  geom_point(alpha = 0.7) +
-  #geom_col(alpha = 0.7) +
-  #coord_polar("y", start = 0) +
+  ggplot2::geom_point(alpha = 0.7) +
+  #ggplot2::geom_col(alpha = 0.7) +
+  #ggplot2::coord_polar("y", start = 0) +
   labs(x = "Record Count", y = "Subgenre", legend = "Count") +
   theme_classic() +
   theme(axis.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
@@ -57,6 +58,7 @@ sub_genre_plot <- function(data) {
         legend.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black") # nolint
   )
 }
+
 
 tophead <- div(
     dbcRow(
