@@ -27,13 +27,16 @@
   #' @examples count_vs_year(df)
   count_vs_year <- function(df) {
     
-    data<-df%>%select(Year,Playlist.Genre,Number.of.Songs)%>%group_by(Year,Playlist.Genre)%>%summarise(Song_Count=sum(Number.of.Songs))
+    data<-df%>%select(Year,Playlist.Genre,Number.of.Songs)%>%
+                      group_by(Year,Playlist.Genre)%>%
+                      summarise(Song_Count=sum(Number.of.Songs))
     
     plot <- ggplot(data, aes(x = Year, y = Song_Count, color = Playlist.Genre)) + # nolint
       geom_line() +
       theme_classic() +
       labs(x = "Album Release Year", y = "Number of Songs Released", color = "Genre") + # nolint
       ggtitle("Count of Songs Released by Year") +
+      theme_classic() + 
       theme(plot.title = element_text(face = "bold"),axis.title = element_text(face = "bold")) # nolint
     
   }
@@ -66,6 +69,7 @@
       geom_col() +
       labs(y = "Popularity", x = "Subgenres") +
       ggtitle("Top 10 Subgenres by Popularity") +
+      theme_classic() +
       theme(plot.title = element_text(face = "bold"),axis.title = element_text(face = "bold")) # nolint
     chart + coord_flip()
   }
@@ -108,6 +112,7 @@
       chart <- chart + geom_col() +
       labs(y = "Popularity", x = ycol) +
       ggtitle(paste(title_topn)) +
+      theme_classic() +
       theme(plot.title = element_text(face = "bold"), # nolint
             axis.title = element_text(face = "bold"))
     #chart<-chart+scale_y_continuous(limits = c(20, 100))
@@ -140,13 +145,8 @@
       geom_point(alpha = 0.7) +
       labs(x = "Record Count", y = "Subgenre", legend = "Count") +
       theme_classic() +
-      theme(
-        plot.title = element_text(family = "Helvetica", face = "bold",  colour = "black"), # nolint
-        axis.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
-        axis.text = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
-        legend.text = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black"), # nolint
-        legend.title = element_text(family = "Helvetica", face = "bold", size = (10), colour = "black") # nolint
-      ) +
+      theme(plot.title = element_text(face = "bold"), # nolint
+            axis.title = element_text(face = "bold")) +
       ggtitle("Record Count by Subgenres")
   
   }
@@ -344,7 +344,7 @@
         Year <= as.integer(years[[2]])
       )
       p <- subgenre_pop(new_data)
-      ggplotly(p,tooltip = "text") |>
+      ggplotly(p, tooltip = "text") |>
         layout(showlegend = FALSE) |> layout(xaxis=list(fixedrange=TRUE)) |> layout(yaxis=list(fixedrange=TRUE)) # nolint
     }
   )
