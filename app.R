@@ -193,6 +193,8 @@ dropdown <- div(
   # Make the genre widget and set the default to all.
   div(
     html$label("Genre"),
+    dbcRow(
+    list(
     dbcCol(
     dccDropdown(
       id = "genre-widget",
@@ -208,6 +210,12 @@ dropdown <- div(
       multi = TRUE
     ),
       md = 6
+    ),
+    dbcCol(
+      htmlH4("Choose a genre, year and exploree!!!!"),
+      md = 6
+    )
+    )
     ),
     # Make the year slider, set the deafult value to the entire year range.
     htmlDiv(list(
