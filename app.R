@@ -217,7 +217,7 @@
         md = 6
       ),
       dbcCol(
-        htmlH4("Pick a genre, select a year and explore"),
+        htmlH2("Pick a genre, a year range then explore!"),
         md = 6
       )
       )
