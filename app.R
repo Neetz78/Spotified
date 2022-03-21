@@ -1,4 +1,4 @@
-  ## -----------------Load all of the dependencies-----------------#
+## -----------------Load all of the dependencies-----------------#
   library(dash)
   library(tidyverse)
   library(plotly)
@@ -26,19 +26,17 @@
   #'
   #' @examples count_vs_year(df)
   count_vs_year <- function(df) {
-    
-    data<-df%>%select(Year,Playlist.Genre,Number.of.Songs)%>%
-                      group_by(Year,Playlist.Genre)%>%
-                      summarise(Song_Count=sum(Number.of.Songs))
-    
+    data <- df %>%
+    select(Year, Playlist.Genre, Number.of.Songs) %>%
+                      group_by(Year, Playlist.Genre) %>%
+                      summarise(Song_Count = sum(Number.of.Songs))
     plot <- ggplot(data, aes(x = Year, y = Song_Count, color = Playlist.Genre)) + # nolint
       geom_line() +
       theme_classic() +
       labs(x = "Album Release Year", y = "Number of Songs Released", color = "Genre") + # nolint
       ggtitle("Count of Songs Released by Year") +
-      theme_classic() + 
+      theme_classic() +
       theme(plot.title = element_text(face = "bold"),axis.title = element_text(face = "bold")) # nolint
-    
   }
   
   #' pop_vs_year()
@@ -86,7 +84,6 @@
   top_n_by_popularity <- function(df, ycol = "Name") {
     df <- arrange(df, desc(Popularity)) |>
       select(ycol, "Artist", "Popularity")
-  
     if (ycol == "Name") {
       colnames(df) <- c("field", "Artist", "Popularity")
       title_topn <- paste("Top 10 Songs by Popularity")
@@ -95,8 +92,8 @@
         summarize(Popularity = mean(Popularity)) |>
         arrange(desc(Popularity))
       df <- df[1:10, ]
-      chart <- ggplot(df, aes(x = reorder(field, Popularity), 
-                              y = Popularity, 
+      chart <- ggplot(df, aes(x = reorder(field, Popularity),
+                              y = Popularity,
                               color = field,
                               text=paste("Name:",field,"\n","Artist:",Artist,"\n Popularity:",round(Popularity,2)))) # nolint
     } else {
@@ -115,8 +112,7 @@
       theme_classic() +
       theme(plot.title = element_text(face = "bold"), # nolint
             axis.title = element_text(face = "bold"))
-    #chart<-chart+scale_y_continuous(limits = c(20, 100))
-      chart<-chart
+      chart <- chart
     chart + coord_flip() # nolint
   }
   
@@ -140,7 +136,7 @@
         y = Playlist.Subgenre,
         color = Playlist.Subgenre,
         size = Count,
-        text=paste("Subgenre:",Playlist.Subgenre,"\n","Count:",Count)
+        text = paste("Subgenre:", Playlist.Subgenre, "\n", "Count:", Count)
       ) +
       geom_point(alpha = 0.7) +
       labs(x = "Record Count", y = "Subgenre", legend = "Count") +
@@ -148,7 +144,6 @@
       theme(plot.title = element_text(face = "bold"), # nolint
             axis.title = element_text(face = "bold")) +
       ggtitle("Record Count by Subgenres")
-  
   }
   
   #' count_vs_subgenre()
@@ -203,6 +198,8 @@
     # Make the genre widget and set the default to all.
     div(
       html$label("Genre"),
+      dbcRow(
+        list(
       dbcCol(
       dccDropdown(
         id = "genre-widget",
@@ -218,6 +215,12 @@
         multi = TRUE
       ),
         md = 6
+      ),
+      dbcCol(
+        htmlH4("Choose a genre year and exploree !!!!!"),
+        md = 6
+      )
+      )
       ),
       # Make the year slider, set the deafult value to the entire year range.
       htmlDiv(list(
@@ -385,7 +388,7 @@
         Year <= as.integer(years[[2]])
       )
       p <- count_vs_subgenre(new_data)
-      ggplotly(p,tooltip = "text") |> layout(showlegend = FALSE)
+      ggplotly(p, tooltip = "text") |> layout(showlegend = FALSE)
     }
   )
   
