@@ -26,24 +26,16 @@
   #'
   #' @examples count_vs_year(df)
   count_vs_year <- function(df) {
-<<<<<<< HEAD
     data <- df %>%
     select(Year, Playlist.Genre, Number.of.Songs) %>%
-    group_by(Year, Playlist.Genre) %>%
-    summarise(Song_Count = sum(Number.of.Songs))
-=======
-    
-    data<-df%>%select(Year,Playlist.Genre,Number.of.Songs)%>%
-                      group_by(Year,Playlist.Genre)%>%
-                      summarise(Song_Count=sum(Number.of.Songs))
-    
->>>>>>> 44cd7bff1da18d8ca72edcedf70135e5e7ebdfb5
+                      group_by(Year, Playlist.Genre) %>%
+                      summarise(Song_Count = sum(Number.of.Songs))
     plot <- ggplot(data, aes(x = Year, y = Song_Count, color = Playlist.Genre)) + # nolint
       geom_line() +
       theme_classic() +
       labs(x = "Album Release Year", y = "Number of Songs Released", color = "Genre") + # nolint
       ggtitle("Count of Songs Released by Year") +
-      theme_classic() + 
+      theme_classic() +
       theme(plot.title = element_text(face = "bold"),axis.title = element_text(face = "bold")) # nolint
   }
   
@@ -225,7 +217,7 @@
         md = 6
       ),
       dbcCol(
-        html$label("Choose a genre year and exploree !!!!!"),
+        htmlH4("Choose a genre year and exploree !!!!!"),
         md = 6
       )
       )
