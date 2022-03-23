@@ -97,3 +97,54 @@ All team members agree to the [Feature Branch] workflow, and the following conve
 3. Issue all pull requests at least 2 days before the deadline. 
 4. At least one team member must review before accepting a pull request. 
 5. Master branch must have no errors at all times (keep it protected, don't merge bad code!)
+
+### Milestone 1
+
+| Category           | Sara          | Xin           | Mayukha       | Neethu        |
+|--------------------|---------------|---------------|---------------|---------------|
+| Repository Setup   | 35%           | 10%           | 10%         | 45%             |
+| Sketch             | 25%           | 25%           | 25%           | 25%           |
+| Documentation      | 30%           | 25%           | 25%           | 20%           |
+| Project Management | 10%           | 40%           | 40%            | 10%            |
+| Troubleshooting    | -             | -             | -             | -             |
+
+Brief notes/explanations (optional):
+- No troubleshooting was needed for Milestone 1
+- We met and worked together as a team for most of this. All member contributed an equal amount. 
+
+### Milestone 2
+
+| Category                  | Sara          | Xin           | Mayukha       | Neethu        |
+|---------------------------|---------------|---------------|---------------|---------------|
+| Documentation/Reflection  |     25%          |        25%       |         25%      |         25%      |
+| Writing new code          |      25%          |        25%       |         25%      |         25%      |
+| Code Reviews/editing      |       10%          |        40%       |         40%      |         10%      |
+| Project Management        |       40%          |        10%       |         10%      |         40%      |
+| Testing & Troubleshooting |      25%          |        25%       |         25%      |         25%      |
+
+Brief notes/explanations (optional): We all tested, documented, and wrote new code equally, while Sara amd Neethu took more of a leadership review and Xin and Mayukha did more code reviews and editing. 
+
+### Milestone 3
+
+| Category                  | Sara          | Xin           | Mayukha       | Neethu        |
+|---------------------------|---------------|---------------|---------------|---------------|
+| Documentation/Reflection  |     25%          |        25%       |         25%      |         25%      |
+| Writing new code          |      25%          |        25%       |         25%      |         25%      |
+| Code Reviews/editing      |       10%          |        40%       |         40%      |         10%      |
+| Project Management        |       40%          |        10%       |         10%      |         40%      |
+| Testing & Troubleshooting |      25%          |        25%       |         25%      |         25%      |
+
+Brief notes/explanations (optional): We all tested, documented, and wrote new code equally, while Sara amd Neethu took more of a leadership review and Xin and Mayukha did more code reviews and editing. We followed our same workflow as Milestone 2. 
+
+### Milestone 3
+
+| Category                  | Sara          | Xin           | Mayukha       | Neethu        |
+|---------------------------|---------------|---------------|---------------|---------------|
+| Documentation/Reflection  |     25%          |        25%       |         25%      |         25%      |
+| Writing new code          |      25%          |        25%       |         25%      |         25%      |
+| Code Reviews/editing      |       10%          |        40%       |         40%      |         10%      |
+| Project Management        |       40%          |        10%       |         10%      |         40%      |
+| Testing & Troubleshooting |      25%          |        25%       |         25%      |         25%      |
+
+Brief notes/explanations (optional): We all tested, documented, and wrote new code equally, while Sara amd Neethu took more of a leadership review and Xin and Mayukha did more code reviews and editing. We followed our same workflow as Milestones 2 and 3. 
+
